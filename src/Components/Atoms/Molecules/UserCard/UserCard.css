@@ -1,0 +1,26 @@
+.user-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.user-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.user-card-name {
+  font-weight: 600;
+  font-size: 16px;
+  color: #333;
+}
+
+.user-card-description {
+  font-size: 14px;
+  color: #666;
+}
