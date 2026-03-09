@@ -1,15 +1,17 @@
 import React from "react"
 import Button from "../../Atoms/Boton/Button"
 import Text from "../../Atoms/Text/Text"
+import Icon from "../../Atoms/Icon/Icon"
+import { MdDashboard, MdManageAccounts, MdAssessment, MdNotifications, MdWarehouse, MdAssignmentReturn } from "react-icons/md"
 import "./Sidebar.css"
 
 const navItems = [
-  { label: "Dashboard", icon: null },
-  { label: "Gestión", icon: null },
-  { label: "Reportes", icon: null },
-  { label: "Notificaciones", icon: null },
-  { label: "Bodegas", icon: null },
-  { label: "Devoluciones", icon: null },
+  { label: "Dashboard",      icon: MdDashboard },
+  { label: "Gestión",        icon: MdManageAccounts },
+  { label: "Reportes",       icon: MdAssessment },
+  { label: "Notificaciones", icon: MdNotifications },
+  { label: "Bodegas",        icon: MdWarehouse },
+  { label: "Devoluciones",   icon: MdAssignmentReturn },
 ]
 
 export default function Sidebar({ activeItem, onItemClick, onLogout }) {
@@ -22,7 +24,7 @@ export default function Sidebar({ activeItem, onItemClick, onLogout }) {
             className={`sidebar-item ${activeItem === item.label ? "sidebar-item--active" : ""}`}
             onClick={() => onItemClick(item.label)}
           >
-            {item.icon && <span className="sidebar-item-icon">{item.icon}</span>}
+            <Icon icon={item.icon} className="sidebar-item-icon" />
             <Text>{item.label}</Text>
           </Button>
         ))}
