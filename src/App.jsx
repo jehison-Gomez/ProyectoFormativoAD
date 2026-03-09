@@ -1,33 +1,30 @@
-import React from "react"
-import { UserSection, ProfileWithActions } from "./Components/Organisms"
+import React, { useState } from "react"
+import Sidebar from "./Components/Organisms/Sidebar/Sidebar"
+import Topbar from "./Components/Organisms/Topbar/Topbar"
+import "./App.css"
 
 function App() {
-  const users = [
-    {
-      id: 1,
-      src: "https://i.pravatar.cc/100?img=1",
-      alt: "Adriana",
-      name: "Adriana",
-      description: "Hola soy Adriana"
-    }
-   
-  ]
+  const [activeItem, setActiveItem] = useState("Dashboard")
+  const [sidebarVisible, setSidebarVisible] = useState(true)
 
   return (
-    <div style={{ padding: "40px" }}>
-      
-      <h2>Usuarios</h2>
-      <UserSection users={users} />
-
-      <h2 style={{ marginTop: "40px" }}>Acciones</h2>
-      <ProfileWithActions
-        user={users[0]}
-        editIcon={() => <span></span>}
-        deleteIcon={() => <span></span>}
-        onEdit={() => alert("Editar usuario")}
-        onDelete={() => alert("Eliminar usuario")}
-      />
-
+    <div className="app-layout">
+      {sidebarVisible && (
+        <Sidebar
+          activeItem={activeItem}
+          onItemClick={setActiveItem}
+        />
+      )}
+      <div className="app-main">
+        <Topbar
+          userName="Junior Garcia"
+          userInitials="JG"
+          onMenuClick={() => setSidebarVisible(!sidebarVisible)}
+        />
+        <main className="app-content">
+          <h1 className="app-title">Hola {activeItem}</h1>
+        </main>
+      </div>
     </div>
   )
 }
