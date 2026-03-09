@@ -1,0 +1,24 @@
+.contenedor {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.circulo {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--color-primary);
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.nombre {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text);
+}

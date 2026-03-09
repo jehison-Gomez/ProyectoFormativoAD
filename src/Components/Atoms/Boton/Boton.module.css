@@ -1,0 +1,45 @@
+.boton {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    display: inline-block;
+    text-align: center;
+}
+
+.boton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.boton:hover:not(:disabled) {
+    opacity: 0.9;
+}
+
+.primario {
+    background-color: var(--color-primary);
+    color: #FFFFFF;
+}
+
+.editar {
+    background-color: var(--color-edit);
+    color: #FFFFFF;
+}
+
+.eliminar {
+    background-color: var(--color-delete);
+    color: #FFFFFF;
+}
+
+.texto {
+    background-color: transparent;
+    color: var(--color-primary);
+    padding: 0;
+    font-weight: 600;
+}
+
+.texto:hover:not(:disabled) {
+    text-decoration: underline;
+}
