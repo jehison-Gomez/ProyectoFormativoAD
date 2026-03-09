@@ -1,0 +1,16 @@
+.header {
+    background-color: #FFFFFF;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.contenedorAvatar {
+    display: flex;
+    align-items: center;
+}

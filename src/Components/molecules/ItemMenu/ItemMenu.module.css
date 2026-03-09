@@ -1,0 +1,46 @@
+.item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--color-text);
+    font-size: 15px;
+    font-weight: 500;
+    text-align: left;
+    transition: all 0.2s ease;
+    margin-bottom: 4px;
+}
+
+.item:hover:not(.activo) {
+    background-color: #F3F4F6;
+}
+
+.activo {
+    background-color: var(--color-primary);
+    color: #FFFFFF;
+}
+
+.icono {
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.submodulo {
+    padding-left: 44px;
+    font-size: 14px;
+}
+
+.colapsado {
+    padding: 12px;
+    justify-content: center;
+    width: 100%;
+}
+
+.colapsado.submodulo {
+    padding-left: 12px;
+}

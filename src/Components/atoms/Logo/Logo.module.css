@@ -1,0 +1,33 @@
+.contenedor {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.icono {
+    font-size: 32px;
+    color: var(--color-primary);
+}
+
+.textWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.titulo {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--color-primary);
+    line-height: 1.2;
+}
+
+.subtitulo {
+    font-size: 9px;
+    font-weight: 600;
+    color: #6B7280;
+    letter-spacing: 0.5px;
+}
+
+.colapsado {
+    justify-content: center;
+}

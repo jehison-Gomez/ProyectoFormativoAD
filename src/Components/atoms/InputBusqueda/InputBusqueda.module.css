@@ -1,0 +1,33 @@
+.contenedor {
+    display: flex;
+    align-items: center;
+    background-color: #FFFFFF;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 8px 12px;
+    gap: 8px;
+    width: 250px;
+    transition: border-color 0.2s ease;
+}
+
+.contenedor:focus-within {
+    border-color: var(--color-primary);
+}
+
+.icono {
+    color: #9CA3AF;
+    font-size: 16px;
+}
+
+.input {
+    border: none;
+    background: transparent;
+    width: 100%;
+    font-size: 14px;
+    color: var(--color-text);
+    outline: none;
+}
+
+.input::placeholder {
+    color: #9CA3AF;
+}
