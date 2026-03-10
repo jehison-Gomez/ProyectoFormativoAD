@@ -1,0 +1,18 @@
+.primary-btn {
+    background-color: rgb(128, 255, 0);
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.secondary-btn {
+    background-color: white;
+    color: black;
+    border: 1px solid #ccc;
+    transition: background-color 0.3s ease;
+}
+
+.tertiary-btn {
+    background-color: #6c757d;
+    color: white;
+    transition: background-color 0.3s ease;
+}

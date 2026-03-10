@@ -1,0 +1,30 @@
+.seccion {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.footerInfo {
+    margin-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.izq {
+    display: flex;
+    align-items: center;
+}
+
+.der {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.infoPagina {
+    font-size: 14px;
+    color: #6B7280;
+}

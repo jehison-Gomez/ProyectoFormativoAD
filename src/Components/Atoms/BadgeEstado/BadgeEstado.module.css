@@ -1,0 +1,18 @@
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.activo {
+    background-color: var(--color-success-bg);
+    color: var(--color-success-text);
+}
+
+.inactivo {
+    background-color: var(--color-error-bg);
+    color: var(--color-error-text);
+}

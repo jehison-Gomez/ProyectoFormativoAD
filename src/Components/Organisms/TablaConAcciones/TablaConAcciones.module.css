@@ -1,0 +1,45 @@
+.contenedor {
+    width: 100%;
+    overflow-x: auto;
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+}
+
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.tabla th {
+    background-color: #F8FAFC;
+    color: #64748B;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    padding: 16px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.tabla td {
+    padding: 16px;
+    font-size: 14px;
+    color: var(--color-text);
+    border-bottom: 1px solid var(--color-border);
+    vertical-align: middle;
+}
+
+.tabla tr:last-child td {
+    border-bottom: none;
+}
+
+.tabla tbody tr:hover {
+    background-color: #F8FAFC;
+}
+
+.sinDatos {
+    text-align: center;
+    color: #9CA3AF;
+    padding: 32px !important;
+}
