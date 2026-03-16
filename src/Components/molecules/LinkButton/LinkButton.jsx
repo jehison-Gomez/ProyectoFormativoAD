@@ -1,6 +1,6 @@
 import React from 'react'
-import Button from '../atoms/Button';
-import Link from '../atoms/Link';
+import Button from '@/Components/atoms/Button/Button';
+import Link from '@/Components/atoms/Link/Link';
 
 export default function LinkButton() {
   return (

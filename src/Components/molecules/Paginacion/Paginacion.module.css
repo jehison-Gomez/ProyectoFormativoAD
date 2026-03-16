@@ -1,0 +1,30 @@
+.contenedor {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.boton {
+    padding: 6px 12px;
+    border: 1px solid var(--color-border);
+    background-color: #FFFFFF;
+    color: var(--color-text);
+    border-radius: 4px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.boton:hover:not(:disabled):not(.activo) {
+    background-color: #F3F4F6;
+}
+
+.boton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.activo {
+    background-color: var(--color-primary);
+    color: #FFFFFF;
+    border-color: var(--color-primary);
+}

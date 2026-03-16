@@ -1,6 +1,6 @@
 import React from 'react';
-import { Sidebar } from '../organisms/Sidebar';
-import { HeaderTitle } from '../molecules/HeaderTitle';
+import { Sidebar } from '@/Components/organisms/Sidebar/Sidebar';
+import { HeaderTitle } from '@/Components/molecules/HeaderTitle/HeaderTitle';
 
 export default function MainTemplate({ title, children }) {
   return (

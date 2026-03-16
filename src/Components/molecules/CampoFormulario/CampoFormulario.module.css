@@ -1,0 +1,16 @@
+.contenedor {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+}
+
+.inputError :global(input) {
+    border-bottom-color: var(--color-error-text) !important;
+}
+
+.mensajeError {
+    font-size: 12px;
+    color: var(--color-error-text);
+    margin-top: 2px;
+}

@@ -33,6 +33,11 @@
     color: #FFFFFF;
 }
 
+.mover {
+    background-color: var(--color-move);
+    color: #FFFFFF;
+}
+
 .texto {
     background-color: transparent;
     color: var(--color-primary);
