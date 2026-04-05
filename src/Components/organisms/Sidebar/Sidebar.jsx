@@ -109,14 +109,14 @@ export const Sidebar = ({ seccionActiva, onNavegar }) => {
                 colapsado={colapsado}
                 onClick={() => manejarNavegacion('areas')}
               />
-              <ItemMenu
+              {/* <ItemMenu
                 icono={<FiFileText />}
                 texto="Fichas"
                 activo={seccionActiva === 'fichas'}
                 esSubmodulo={true}
                 colapsado={colapsado}
                 onClick={() => manejarNavegacion('fichas')}
-              />
+              /> */}
             </div>
           )}
         </div>
@@ -150,13 +150,13 @@ export const Sidebar = ({ seccionActiva, onNavegar }) => {
             colapsado={colapsado}
             onClick={() => manejarNavegacion('bodegas')}
           /> */}
-          <ItemMenu
+          {/* <ItemMenu
             icono={<FiCornerUpLeft />}
             texto="Devoluciones"
             activo={seccionActiva === 'devoluciones'}
             colapsado={colapsado}
             onClick={() => manejarNavegacion('devoluciones')}
-          />
+          /> */}
         </div>
       </nav>
 

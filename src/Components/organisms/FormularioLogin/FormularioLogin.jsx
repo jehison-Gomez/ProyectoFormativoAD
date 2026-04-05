@@ -4,7 +4,7 @@ import { InputPassword } from '@/Components/atoms/InputPassword/InputPassword';
 import { Boton } from '@/Components/atoms/Boton/Boton';
 import styles from './FormularioLogin.module.css';
 
-export const FormularioLogin = ({ onLogin }) => {
+export const FormularioLogin = ({ onLogin, cargando, error }) => {
     const [usuario, setUsuario] = useState('');
     const [clave, setClave] = useState('');
 
@@ -35,9 +35,15 @@ export const FormularioLogin = ({ onLogin }) => {
             <a href="#" className={styles.enlaceOlvidaste}>¿Olvidaste tu clave?</a>
 
             <div className={styles.acciones}>
+                {error && (
+                    <p style={{ color: 'red', fontSize: '14px', marginBottom: '10px', textAlign: 'center' }}>
+                        {error}
+                    </p>
+                )}
                 <Boton
                     variante="primario"
                     texto="Ingresar"
+                    disabled={cargando}
                     onClick={() => { }} // Se maneja en el onSubmit del form
                 />
             </div>
