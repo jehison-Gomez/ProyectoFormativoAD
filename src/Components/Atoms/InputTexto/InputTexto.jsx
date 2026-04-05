@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './InputTexto.module.css';
 
-export const InputTexto = ({ label, placeholder = '', value, onChange, tipo = 'text', className = '' }) => {
+export const InputTexto = ({ label, placeholder = '', value, onChange, tipo = 'text', className = '', disabled = false }) => {
     return (
         <div className={`${styles.contenedor} ${className}`}>
             {label && <label className={styles.label}>{label}</label>}
@@ -11,6 +11,7 @@ export const InputTexto = ({ label, placeholder = '', value, onChange, tipo = 't
                 placeholder={placeholder}
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
+                disabled={disabled}
             />
         </div>
     );

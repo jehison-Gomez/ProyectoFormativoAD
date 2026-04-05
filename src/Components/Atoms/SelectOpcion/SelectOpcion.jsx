@@ -12,11 +12,11 @@ export const SelectOpcion = ({ label, opciones = [], value, onChange, className 
                     onChange={(e) => onChange(e.target.value)}
                 >
                     <option value="" disabled>Seleccione una opción</option>
-                    {opciones.map((opcion, index) => (
-                        <option key={index} value={opcion}>
-                            {opcion}
-                        </option>
-                    ))}
+                    {opciones.map(op => 
+                        typeof op === 'string'
+                            ? <option key={op} value={op}>{op}</option>
+                            : <option key={op.valor} value={op.valor}>{op.label}</option>
+                    )}
                 </select>
             </div>
         </div>
