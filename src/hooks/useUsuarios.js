@@ -4,6 +4,7 @@ import { getUsuarios, createUsuario, updateUsuario, deleteUsuario } from '../ser
 export const useUsuarios = () => {
     const [listUsuario, setListUsuario] = useState([]);
     const [cargando, setCargando] = useState(true);
+    const [usuarioEditando, setUsuarioEditando] = useState(null);
 
     const cargar = async () => {
         try {
@@ -45,9 +46,26 @@ export const useUsuarios = () => {
         }
     };
 
+    const seleccionarParaEditar = (usuario) => {
+        setUsuarioEditando(usuario);
+    };
+
+    const limpiarEdicion = () => {
+        setUsuarioEditando(null);
+    };
+
     useEffect(() => {
         cargar();
     }, []);
 
-    return { listUsuario, cargando, crear, actualizar, eliminar };
+    return { 
+        listUsuario, 
+        cargando, 
+        usuarioEditando,
+        crear, 
+        actualizar, 
+        eliminar,
+        seleccionarParaEditar,
+        limpiarEdicion
+    };
 };

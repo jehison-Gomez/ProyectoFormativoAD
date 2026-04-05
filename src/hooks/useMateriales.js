@@ -1,15 +1,20 @@
 import { useState, useEffect } from 'react';
-import { getMateriales, createMaterial, updateMaterial, deleteMaterial } from '../services/materialService';
+import { getMateriales, getMaterialesPorBodega, createMaterial, updateMaterial, deleteMaterial } from '../services/materialService';
 
-export const useMateriales = () => {
+export const useMateriales = (idBodega = null) => {
     const [listMaterial, setListMaterial] = useState([]);
     const [cargando, setCargando] = useState(true);
+    const [materialEditando, setMaterialEditando] = useState(null);
 
     const cargar = async () => {
         try {
             setCargando(true);
-            const data = await getMateriales();
-            setListMaterial(data);
+            const data = idBodega ? await getMaterialesPorBodega(idBodega) : await getMateriales();
+            const formattedData = data.map(item => ({
+                ...item,
+                Fecha_Vencimiento: item.Fecha_Vencimiento ? item.Fecha_Vencimiento.split('T')[0] : item.Fecha_Vencimiento
+            }));
+            setListMaterial(formattedData);
         } catch (error) {
             console.log('Error al obtener materiales:', error);
         } finally {
@@ -45,9 +50,26 @@ export const useMateriales = () => {
         }
     };
 
+    const seleccionarParaEditar = (material) => {
+        setMaterialEditando(material);
+    };
+
+    const limpiarEdicion = () => {
+        setMaterialEditando(null);
+    };
+
     useEffect(() => {
         cargar();
-    }, []);
+    }, [idBodega]);
 
-    return { listMaterial, cargando, crear, actualizar, eliminar };
+    return { 
+        listMaterial, 
+        cargando, 
+        materialEditando,
+        crear, 
+        actualizar, 
+        eliminar,
+        seleccionarParaEditar,
+        limpiarEdicion
+    };
 };

@@ -4,6 +4,7 @@ import { getBodegas, getBodegasPorArea, createBodega, updateBodega, deleteBodega
 export const useBodegas = (idArea = null) => {
     const [listBodega, setListBodega] = useState([]);
     const [cargando, setCargando] = useState(true);
+    const [bodegaEditando, setBodegaEditando] = useState(null);
 
     const cargar = async () => {
         try {
@@ -20,7 +21,8 @@ export const useBodegas = (idArea = null) => {
     const crear = async (datos) => {
         try {
             await createBodega(datos);
-            cargar();
+            alert('Bodega creada correctamente');
+            cargar(); // recarga la lista
         } catch (error) {
             console.log('Error al crear bodega:', error);
         }
@@ -45,9 +47,26 @@ export const useBodegas = (idArea = null) => {
         }
     };
 
+    const seleccionarParaEditar = (bodega) => {
+        setBodegaEditando(bodega);
+    };
+
+    const limpiarEdicion = () => {
+        setBodegaEditando(null);
+    };
+
     useEffect(() => {
         cargar();
     }, [idArea]);
 
-    return { listBodega, cargando, crear, actualizar, eliminar };
+    return { 
+        listBodega, 
+        cargando, 
+        bodegaEditando,
+        crear, 
+        actualizar, 
+        eliminar,
+        seleccionarParaEditar,
+        limpiarEdicion
+    };
 };

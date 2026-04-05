@@ -4,6 +4,7 @@ import { getFichas, createFicha, updateFicha, deleteFicha } from '../services/fi
 export const useFichas = () => {
     const [listFicha, setListFicha] = useState([]);
     const [cargando, setCargando] = useState(true);
+    const [fichaEditando, setFichaEditando] = useState(null);
 
     const cargar = async () => {
         try {
@@ -45,9 +46,26 @@ export const useFichas = () => {
         }
     };
 
+    const seleccionarParaEditar = (ficha) => {
+        setFichaEditando(ficha);
+    };
+
+    const limpiarEdicion = () => {
+        setFichaEditando(null);
+    };
+
     useEffect(() => {
         cargar();
     }, []);
 
-    return { listFicha, cargando, crear, actualizar, eliminar };
+    return { 
+        listFicha, 
+        cargando, 
+        fichaEditando,
+        crear, 
+        actualizar, 
+        eliminar,
+        seleccionarParaEditar,
+        limpiarEdicion
+    };
 };
