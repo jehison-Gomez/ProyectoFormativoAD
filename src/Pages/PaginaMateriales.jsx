@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { LayoutPrincipal } from '../Components/templates/LayoutPrincipal/LayoutPrincipal';
 import { SeccionTabla } from '../Components/organisms/SeccionTabla/SeccionTabla';
 import { ModalFormulario } from '../Components/organisms/ModalFormulario/ModalFormulario';
@@ -10,8 +10,35 @@ import { useMateriales } from '../hooks/useMateriales';
 
 export const PaginaMateriales = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const params = new URLSearchParams(location.search);
+    const idBodega = params.get('bodega');
+
     const [mostrarModal, setMostrarModal] = useState(false);
-    const { listMaterial, cargando, crear, eliminar } = useMateriales();
+    const { listMaterial, cargando, materialEditando, crear, actualizar, eliminar, seleccionarParaEditar, limpiarEdicion } = useMateriales(idBodega);
+
+    const [form, setForm] = useState({
+        Codigo_SENA: '', Nombre_Material: '', Stock_Minimo: '', Stock_Total: '', Unida_Medida: '', Descripcion: '', Fecha_Vencimiento: '', FK_ID_Bodega: ''
+    });
+
+    useEffect(() => {
+        if (materialEditando) {
+            setForm({
+                Codigo_SENA: materialEditando.Codigo_SENA || '',
+                Nombre_Material: materialEditando.Nombre_Material || '',
+                Stock_Minimo: materialEditando.Stock_Minimo || '',
+                Stock_Total: materialEditando.Stock_Total || '',
+                Unida_Medida: materialEditando.Unida_Medida || '',
+                Descripcion: materialEditando.Descripcion || '',
+                Fecha_Vencimiento: materialEditando.Fecha_Vencimiento || '',
+                FK_ID_Bodega: materialEditando.FK_ID_Bodega || ''
+            });
+        } else {
+            setForm({
+                Codigo_SENA: '', Nombre_Material: '', Stock_Minimo: '', Stock_Total: '', Unida_Medida: '', Descripcion: '', Fecha_Vencimiento: '', FK_ID_Bodega: ''
+            });
+        }
+    }, [materialEditando]);
 
     const columnas = [
         { key: 'ID_Material', label: 'ID' },
@@ -29,53 +56,74 @@ export const PaginaMateriales = () => {
         navigate(`/app/gestion/${ruta}`);
     };
 
-    const handleGuardar = async () => {
-        await crear(form);
-        setMostrarModal(false);
-        setForm({
-            Elemento: '', Codigo_Material: '', Encargado: '', Area: '', Ubicacion: '', Unidad: '', Categoria: '', Caducidad: false
-        });
+    const handleAñadir = () => {
+        limpiarEdicion();
+        setMostrarModal(true);
     };
 
-    const [form, setForm] = useState({
-        Elemento: '', Codigo_Material: '', Encargado: '', Area: '', Ubicacion: '', Unidad: '', Categoria: '', Caducidad: false
-    });
+    const handleEditar = (fila) => {
+        seleccionarParaEditar(fila);
+        setMostrarModal(true);
+    };
+
+    const handleGuardar = async () => {
+        const dataToSave = {
+            ...form,
+            Stock_Minimo: parseInt(form.Stock_Minimo) || 0,
+            Stock_Total: parseInt(form.Stock_Total) || 0,
+            FK_ID_Bodega: parseInt(form.FK_ID_Bodega) || 0
+        };
+
+        if (materialEditando) {
+            await actualizar(materialEditando.ID_Material, dataToSave);
+        } else {
+            await crear(dataToSave);
+        }
+        setMostrarModal(false);
+        limpiarEdicion();
+    };
+
+    const handleCerrarModal = () => {
+        setMostrarModal(false);
+        limpiarEdicion();
+    };
 
     return (
         <LayoutPrincipal
             seccionActiva="materiales"
             onNavegar={handleNavegar}
-            nombreUsuario="Junior García"
+            nombreUsuario="Admin"
         >
             {cargando ? (
                 <p>Cargando...</p>
             ) : (
                 <SeccionTabla
-                    titulo="Lista de Materiales"
+                    titulo={idBodega ? `Materiales de Bodega #${idBodega}` : "Lista de Materiales"}
                     columnas={columnas}
                     filas={listMaterial}
-                    onAñadir={() => setMostrarModal(true)}
+                    onVerTodas={idBodega ? () => navigate('/app/materiales') : undefined}
+                    onAñadir={handleAñadir}
                     textoBotonAñadir="+ Añadir Elemento"
                     mostrarAcciones={true}
-                    onEditar={(fila) => console.log('Editar', fila)}
+                    onEditar={handleEditar}
                     onEliminar={(fila) => eliminar(fila.ID_Material)}
                 />
             )}
 
             <ModalFormulario
-                titulo="Añadir Elemento"
+                titulo={materialEditando ? "Editar Elemento" : "Añadir Elemento"}
                 visible={mostrarModal}
                 onGuardar={handleGuardar}
-                onCerrar={() => setMostrarModal(false)}
+                onCerrar={handleCerrarModal}
             >
-                <CampoFormulario label="Nombre" value={form.Elemento} onChange={v => setForm({ ...form, Elemento: v })} />
-                <CampoFormulario label="Código" value={form.Codigo_Material} onChange={v => setForm({ ...form, Codigo_Material: v })} />
-                <CampoFormulario label="Responsable" value={form.Encargado} onChange={v => setForm({ ...form, Encargado: v })} />
-                <CampoFormulario label="Área" value={form.Area} onChange={v => setForm({ ...form, Area: v })} />
-                <CampoFormulario label="Lugar de Almacenamiento" value={form.Ubicacion} onChange={v => setForm({ ...form, Ubicacion: v })} />
-                <CampoFormulario label="Unidad de medida" value={form.Unidad} onChange={v => setForm({ ...form, Unidad: v })} />
-                <SelectOpcion label="Categoría" opciones={['Consumible', 'Herramienta', 'Otro']} value={form.Categoria} onChange={v => setForm({ ...form, Categoria: v })} />
-                <CheckboxCampo label="¿Cuenta con Fecha de Caducidad?" checked={form.Caducidad} onChange={v => setForm({ ...form, Caducidad: v })} />
+                <CampoFormulario label="Código SENA" value={form.Codigo_SENA} onChange={v => setForm({ ...form, Codigo_SENA: v })} />
+                <CampoFormulario label="Nombre" value={form.Nombre_Material} onChange={v => setForm({ ...form, Nombre_Material: v })} />
+                <CampoFormulario label="Stock Mínimo" type="number" value={form.Stock_Minimo} onChange={v => setForm({ ...form, Stock_Minimo: v })} />
+                <CampoFormulario label="Stock Total" type="number" value={form.Stock_Total} onChange={v => setForm({ ...form, Stock_Total: v })} />
+                <CampoFormulario label="Unidad de Medida" value={form.Unida_Medida} onChange={v => setForm({ ...form, Unida_Medida: v })} />
+                <CampoFormulario label="Descripción" value={form.Descripcion} onChange={v => setForm({ ...form, Descripcion: v })} />
+                <CampoFormulario label="Fecha Vencimiento" type="date" value={form.Fecha_Vencimiento} onChange={v => setForm({ ...form, Fecha_Vencimiento: v })} />
+                <CampoFormulario label="ID Bodega" type="number" value={form.FK_ID_Bodega} onChange={v => setForm({ ...form, FK_ID_Bodega: v })} />
             </ModalFormulario>
         </LayoutPrincipal>
     );

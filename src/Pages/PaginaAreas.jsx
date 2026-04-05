@@ -4,7 +4,9 @@ import { LayoutPrincipal } from '../Components/templates/LayoutPrincipal/LayoutP
 import { SeccionTabla } from '../Components/organisms/SeccionTabla/SeccionTabla';
 import { ModalFormulario } from '../Components/organisms/ModalFormulario/ModalFormulario';
 import { CampoFormulario } from '../Components/molecules/CampoFormulario/CampoFormulario';
+import { SelectOpcion } from '../Components/atoms/SelectOpcion/SelectOpcion';
 import { useAreas } from '../hooks/useAreas';
+import { useUsuarios } from '../hooks/useUsuarios';
 
 export const PaginaAreas = () => {
     const navigate = useNavigate();
@@ -26,6 +28,7 @@ export const PaginaAreas = () => {
         cambiarBusqueda,
         totalElementosFiltrados
     } = useAreas();
+    const { listUsuario } = useUsuarios();
 
     const [form, setForm] = useState({
         Nombre_Area: '', Ambiente: '', FK_ID_Usuario: '', FK_ID_Sedes: ''
@@ -50,8 +53,16 @@ export const PaginaAreas = () => {
         { key: 'ID_Area', label: 'Código' },
         { key: 'Nombre_Area', label: 'Nombre' },
         { key: 'Ambiente', label: 'Ambiente' },
-        { key: 'FK_ID_Usuario', label: 'Encargado' }
+        { key: 'Nombre_Encargado', label: 'Encargado' }
     ];
+
+    const filasConNombre = areasPaginadas.map(a => {
+        const encargado = listUsuario.find(u => u.ID_Usuario === a.FK_ID_Usuario);
+        return {
+            ...a,
+            Nombre_Encargado: encargado ? `${encargado.Nombre} ${encargado.Apellidos}` : a.FK_ID_Usuario
+        };
+    });
 
     const handleNavegar = (ruta) => {
         navigate(`/app/${ruta}`);
@@ -103,7 +114,7 @@ export const PaginaAreas = () => {
         <LayoutPrincipal
             seccionActiva="areas"
             onNavegar={handleNavegar}
-            nombreUsuario="Junior García"
+            nombreUsuario="Admin"
         >
             {cargando ? (
                 <p>Cargando...</p>
@@ -111,7 +122,7 @@ export const PaginaAreas = () => {
                 <SeccionTabla
                     titulo="Lista de Áreas"
                     columnas={columnas}
-                    filas={areasPaginadas}
+                    filas={filasConNombre}
                     onAñadir={handleAñadir}
                     textoBotonAñadir="+ Añadir Área"
                     mostrarAcciones={true}
@@ -149,11 +160,14 @@ export const PaginaAreas = () => {
                     value={form.Ambiente}
                     onChange={v => setForm({ ...form, Ambiente: v })}
                 />
-                <CampoFormulario
-                    label="ID Encargado"
-                    type="number"
+                <SelectOpcion
+                    label="Encargado"
+                    opciones={listUsuario.map(u => ({
+                        valor: u.ID_Usuario,
+                        label: `${u.Nombre} ${u.Apellidos}`
+                    }))}
                     value={form.FK_ID_Usuario}
-                    onChange={v => setForm({ ...form, FK_ID_Usuario: v })}
+                    onChange={val => setForm({ ...form, FK_ID_Usuario: val })}
                 />
                 {!areaEditando && (
                     <CampoFormulario

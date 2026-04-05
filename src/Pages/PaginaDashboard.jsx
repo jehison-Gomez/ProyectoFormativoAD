@@ -14,7 +14,7 @@ export const PaginaDashboard = () => {
         <LayoutPrincipal
             seccionActiva="dashboard"
             onNavegar={handleNavegar}
-            nombreUsuario="Junior García"
+            nombreUsuario="Admin"
         >
             <ModuleContent />
         </LayoutPrincipal>

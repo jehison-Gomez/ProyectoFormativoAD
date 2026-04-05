@@ -16,7 +16,7 @@ export const PaginaNotificaciones = () => {
         <LayoutPrincipal
             seccionActiva="notificaciones"
             onNavegar={handleNavegar}
-            nombreUsuario="Junior García"
+            nombreUsuario="Admin"
         >
            <ModuleContent />
         </LayoutPrincipal>

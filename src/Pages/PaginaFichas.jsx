@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LayoutPrincipal } from '../Components/templates/LayoutPrincipal/LayoutPrincipal';
 import { SeccionTabla } from '../Components/organisms/SeccionTabla/SeccionTabla';
@@ -9,7 +9,29 @@ import { useFichas } from '../hooks/useFichas';
 export const PaginaFichas = () => {
     const navigate = useNavigate();
     const [mostrarModal, setMostrarModal] = useState(false);
-    const { listFicha, cargando, crear, eliminar } = useFichas();
+    const { listFicha, cargando, fichaEditando, crear, actualizar, eliminar, seleccionarParaEditar, limpiarEdicion } = useFichas();
+
+    const [form, setForm] = useState({
+        Codigo_Ficha: '', ID_Ficha: '', Instructor_Lider: '', Jornada: '', Curso: '', Ubicacion: '', Estado: 'Activo'
+    });
+
+    useEffect(() => {
+        if (fichaEditando) {
+            setForm({
+                Codigo_Ficha: fichaEditando.Codigo_Ficha || '',
+                ID_Ficha: fichaEditando.ID_Ficha || '',
+                Instructor_Lider: fichaEditando.Instructor_Lider || '',
+                Jornada: fichaEditando.Jornada || '',
+                Curso: fichaEditando.Curso || '',
+                Ubicacion: fichaEditando.Ubicacion || '',
+                Estado: fichaEditando.Estado || 'Activo'
+            });
+        } else {
+            setForm({
+                Codigo_Ficha: '', ID_Ficha: '', Instructor_Lider: '', Jornada: '', Curso: '', Ubicacion: '', Estado: 'Activo'
+            });
+        }
+    }, [fichaEditando]);
 
     const columnas = [
         { key: 'Codigo_Ficha', label: 'Código' },
@@ -25,21 +47,36 @@ export const PaginaFichas = () => {
         navigate(`/app/gestion/${ruta}`);
     };
 
-    const handleGuardar = async () => {
-        await crear(form);
-        setMostrarModal(false);
-        setForm({ Codigo_Ficha: '', ID_Ficha: '', Instructor_Lider: '', Jornada: '', Curso: '', Ubicacion: '', Estado: 'Activo' });
+    const handleAñadir = () => {
+        limpiarEdicion();
+        setMostrarModal(true);
     };
 
-    const [form, setForm] = useState({
-        Codigo_Ficha: '', ID_Ficha: '', Instructor_Lider: '', Jornada: '', Curso: '', Ubicacion: '', Estado: 'Activo'
-    });
+    const handleEditar = (fila) => {
+        seleccionarParaEditar(fila);
+        setMostrarModal(true);
+    };
+
+    const handleGuardar = async () => {
+        if (fichaEditando) {
+            await actualizar(fichaEditando.ID_Ficha, form);
+        } else {
+            await crear(form);
+        }
+        setMostrarModal(false);
+        limpiarEdicion();
+    };
+
+    const handleCerrarModal = () => {
+        setMostrarModal(false);
+        limpiarEdicion();
+    };
 
     return (
         <LayoutPrincipal
             seccionActiva="fichas"
             onNavegar={handleNavegar}
-            nombreUsuario="Junior García"
+            nombreUsuario="Admin"
         >
             {cargando ? (
                 <p>Cargando...</p>
@@ -48,19 +85,19 @@ export const PaginaFichas = () => {
                     titulo="Lista de Fichas"
                     columnas={columnas}
                     filas={listFicha}
-                    onAñadir={() => setMostrarModal(true)}
+                    onAñadir={handleAñadir}
                     textoBotonAñadir="+ Añadir Ficha"
                     mostrarAcciones={true}
-                    onEditar={(fila) => console.log('Editar', fila)}
+                    onEditar={handleEditar}
                     onEliminar={(fila) => eliminar(fila.ID_Ficha)}
                 />
             )}
 
             <ModalFormulario
-                titulo="Añadir Ficha"
+                titulo={fichaEditando ? "Editar Ficha" : "Añadir Ficha"}
                 visible={mostrarModal}
                 onGuardar={handleGuardar}
-                onCerrar={() => setMostrarModal(false)}
+                onCerrar={handleCerrarModal}
             >
                 <CampoFormulario label="Código" value={form.Codigo_Ficha} onChange={v => setForm({ ...form, Codigo_Ficha: v })} />
                 <CampoFormulario label="ID Ficha" value={form.ID_Ficha} onChange={v => setForm({ ...form, ID_Ficha: v })} />
