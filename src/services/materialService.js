@@ -9,6 +9,15 @@ export const getMateriales = async () => {
     }
 };
 
+export const getMaterialesPorBodega = async (idBodega) => {
+    try {
+        const response = await axios.get(`http://localhost:3000/material/material/${idBodega}`);
+        return response.data;
+    } catch (error) {
+        console.log('Error en getMaterialesPorBodega:', error);
+    }
+};
+
 export const deleteMaterial = async (id) => {
     try {
         const response = await axios.delete(`http://localhost:3000/material/eliminar/${id}`);

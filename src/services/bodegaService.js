@@ -29,8 +29,15 @@ export const deleteBodega = async (id) => {
 
 export const createBodega = async (datos) => {
     try {
-        const response = await axios.post('http://localhost:3000/bodega/crear', datos);
-        return response.data;
+        const response = await fetch('http://localhost:3000/bodega/crear', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(datos)
+        });
+        const data = await response.json();
+        return data;
     } catch (error) {
         console.log('Error en createBodega:', error);
     }
