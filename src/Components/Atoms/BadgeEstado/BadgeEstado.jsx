@@ -7,6 +7,9 @@ export const BadgeEstado = ({ estado }) => {
     return (
         <span className={`${styles.badge} ${isActivo ? styles.activo : styles.inactivo}`}>
             {estado}
+
+
+            
         </span>
     );
 };
