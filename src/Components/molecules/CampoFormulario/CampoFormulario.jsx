@@ -13,8 +13,12 @@ export const CampoFormulario = ({ label, placeholder, value, onChange, error, di
                 className={error ? styles.inputError : ''}
                 disabled={disabled}
                 tipo={type}
+
             />
             {error && <span className={styles.mensajeError}>{error}</span>}
         </div>
     );
 };
+
+
+
