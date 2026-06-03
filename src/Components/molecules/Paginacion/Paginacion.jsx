@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './Paginacion.module.css';
 
+
 export const Paginacion = ({ paginaActual, totalPaginas, onCambiar }) => {
     const paginas = Array.from({ length: totalPaginas }, (_, i) => i + 1);
 
@@ -13,6 +14,7 @@ export const Paginacion = ({ paginaActual, totalPaginas, onCambiar }) => {
             >
                 &laquo;
             </button>
+
 
             {paginas.map(pag => (
                 <button
