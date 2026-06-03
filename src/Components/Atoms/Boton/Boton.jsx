@@ -7,6 +7,7 @@ export const Boton = ({ variante = 'primario', texto, onClick, disabled = false 
       className={`${styles.boton} ${styles[variante]}`}
       onClick={onClick}
       disabled={disabled}
+      
     >
       {texto}
     </button>
